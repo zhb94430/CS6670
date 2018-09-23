@@ -32,7 +32,7 @@ namespace src
                 string currentLine = r.ReadLine();
 
                 // # Comment
-                if (currentLine.StartsWith("#")
+                if (currentLine.StartsWith("#"))
                 {
                     continue;
                 }
