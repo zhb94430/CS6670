@@ -9,10 +9,10 @@ namespace src
     public class Bezier
     {
         // Data Structures
-        float[][] PArray;
+        private float[,] PArray;
 
         // Methods
-        public Bezier(float[][] _PArray)
+        public Bezier(float[,] _PArray)
         {
             PArray = _PArray;
         }

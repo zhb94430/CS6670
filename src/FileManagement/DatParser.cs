@@ -9,14 +9,21 @@ namespace src
     public class DatParser
     {
         // Arrays to store the points
-        float[,] PArray;
+        private float[,] PArray;
+
+        // Curves Class stores a list of parsed curves
+        private Curves curves;
 
         public DatParser(string fileLocation)
         {
-            //TODO Try-catch
-
-                this.Parse(new StreamReader(fileLocation));
-
+            if (File.Exists(fileLocation))
+            {
+                this.Parse(File.OpenText(fileLocation));
+            }
+            else
+            {
+                Console.WriteLine("Invalid Path");
+            }
         }
 
         private void Parse(StreamReader r)
@@ -52,7 +59,7 @@ namespace src
                     {
                         arrayLength = int.Parse(parsed[1]);
 
-                        PArray = new float[2, arrayLength];
+                        PArray = new float[arrayLength, 2];
                         currentIndex = 0;
                     }
 
@@ -65,8 +72,8 @@ namespace src
                             float x = float.Parse(parsed[1]) / float.Parse(parsed[3]);
                             float y = float.Parse(parsed[2]) / float.Parse(parsed[3]);
 
-                            PArray[0, currentIndex] = x;
-                            PArray[1, currentIndex] = y;
+                            PArray[currentIndex, 0] = x;
+                            PArray[currentIndex, 1] = y;
                             currentIndex++;
                         }
 
@@ -76,8 +83,8 @@ namespace src
                             float x = float.Parse(parsed[1]);
                             float y = float.Parse(parsed[2]);
 
-                            PArray[0, currentIndex] = x;
-                            PArray[1, currentIndex] = y;
+                            PArray[currentIndex, 0] = x;
+                            PArray[currentIndex, 1] = y;
                             currentIndex++;
                         }
                     }
@@ -85,14 +92,22 @@ namespace src
                     // Generate Bezier Line
                     else if (currentIndex == arrayLength)
                     {
-                        System.Diagnostics.Debug.WriteLine("Generating Bezier Line with ");
-                        System.Diagnostics.Debug.WriteLine(arrayLength);
+                        Console.WriteLine("Generating Bezier Line with ");
+                        Console.WriteLine(arrayLength);
+
+                        curves.AddBezier(new Bezier(PArray));
 
                         currentIndex = 0;
                         arrayLength = 0;
+                        PArray = new float[0, 0];
                     }
                 }
             }
+        }
+
+        public Curves GetResult()
+        {
+            return curves;
         }
     }
 }
