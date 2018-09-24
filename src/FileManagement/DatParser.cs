@@ -3,9 +3,6 @@ using System.IO;
 
 namespace src
 {
-    //TODO Finish Parser
-    //     Unit Test
-
     public class DatParser
     {
         // Arrays to store the points
@@ -16,6 +13,8 @@ namespace src
 
         public DatParser(string fileLocation)
         {
+            curves = new Curves();
+
             if (File.Exists(fileLocation))
             {
                 this.Parse(File.OpenText(fileLocation));
@@ -43,12 +42,24 @@ namespace src
                 }
 
                 // Parse the line
-                string[] parsed = currentLine.Split(' ');
+                string[] parsed = currentLine.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
 
                 // Number of lines
                 if (parsed.Length == 1)
                 {
-                    numberOfLines = int.Parse(parsed[0]);
+                    if (!int.TryParse(parsed[0], out numberOfLines))
+                    {
+                        if (numberOfLines == 0)
+                        {
+                            numberOfLines = -1;
+                        }
+                    }
+                }
+
+                // Skip empty lines
+                else if (parsed.Length == 0)
+                {
+                    continue;
                 }
 
                 // Number of Points & Points Type
@@ -67,10 +78,22 @@ namespace src
                     else if (currentIndex < arrayLength)
                     {
                         // Q Points
-                        if (parsed.Length == 4)
+                        if (parsed.Length == 3)
                         {
-                            float x = float.Parse(parsed[1]) / float.Parse(parsed[3]);
-                            float y = float.Parse(parsed[2]) / float.Parse(parsed[3]);
+                            float w = float.Parse(parsed[2]);
+                            float x = 0.0F;
+                            float y = 0.0F;
+
+                            if (w == 0.0F)
+                            {
+                                x = float.PositiveInfinity;
+                                y = float.PositiveInfinity;
+                            }
+                            else
+                            {
+                                x = float.Parse(parsed[0]) / w;
+                                y = float.Parse(parsed[1]) / w;
+                            }
 
                             PArray[currentIndex, 0] = x;
                             PArray[currentIndex, 1] = y;
@@ -78,10 +101,10 @@ namespace src
                         }
 
                         // P Points
-                        else if (parsed.Length == 3)
+                        else if (parsed.Length == 2)
                         {
-                            float x = float.Parse(parsed[1]);
-                            float y = float.Parse(parsed[2]);
+                            float x = float.Parse(parsed[0]);
+                            float y = float.Parse(parsed[1]);
 
                             PArray[currentIndex, 0] = x;
                             PArray[currentIndex, 1] = y;
@@ -90,7 +113,7 @@ namespace src
                     }
 
                     // Generate Bezier Line
-                    else if (currentIndex == arrayLength)
+                    if (currentIndex == arrayLength)
                     {
                         Console.WriteLine("Generating Bezier Line with ");
                         Console.WriteLine(arrayLength);
