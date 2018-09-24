@@ -8,7 +8,9 @@ public class CircleDraw : MonoBehaviour
 {
     public float theta_scale = 0.01f;        //Set lower to add more points
     public int size; //Total number of points in circle
-    public float radius = 3f;
+    public float radius = 0.05f;
+    public Color color = new Color(0.75f, 0.3f, 0.3f, 1.0f);
+
     LineRenderer lineRenderer;
 
     void Awake()
@@ -17,9 +19,11 @@ public class CircleDraw : MonoBehaviour
         size = (int)sizeValue;
         size++;
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.material = new Material(Shader.Find("GUI/Text Shader"));
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
         lineRenderer.positionCount = size;
     }
 

@@ -15,9 +15,9 @@ public class LoadBezier : MonoBehaviour {
         // Hard Coded for now
         dparser = new DatParser(path);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    void Start()
+    {
         foreach (Bezier b in dparser.GetResult().GetBezierList())
         {
             GameObject g = new GameObject();
@@ -26,6 +26,10 @@ public class LoadBezier : MonoBehaviour {
 
             bScript.b = b;
         }
+    }
+
+    // Update is called once per frame
+    void Update () {
 
 	}
 }
