@@ -18,6 +18,11 @@ namespace src
             bezierList.Add(b);
         }
 
+        public List<Bezier> GetBezierList()
+        {
+            return bezierList;
+        }
+
         public override bool Equals(object obj)
         {
             var item = obj as Curves;

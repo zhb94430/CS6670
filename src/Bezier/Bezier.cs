@@ -10,6 +10,10 @@ namespace src
 
     public class Bezier
     {
+        // Attributes
+        public int numOfPoints;
+        public int pointDim;
+
         // Data Structures
         private float[,] PArray;
 
@@ -17,6 +21,13 @@ namespace src
         public Bezier(float[,] _PArray)
         {
             PArray = _PArray;
+            numOfPoints = PArray.GetLength(0);
+            pointDim = PArray.GetLength(1);
+        }
+
+        public float[,] GetPoints()
+        {
+            return PArray;
         }
 
         public override bool Equals(object obj)
@@ -41,5 +52,7 @@ namespace src
         {
             return this.PArray.GetHashCode();
         }
+
+
     }
 }
