@@ -17,17 +17,36 @@ namespace src
         // Data Structures
         private float[,] PArray;
 
+        // Preprocessed Variables
+
+
         // Methods
         public Bezier(float[,] _PArray)
         {
             PArray = _PArray;
             numOfPoints = PArray.GetLength(0);
             pointDim = PArray.GetLength(1);
+
+            PrepareVariables();
         }
 
         public float[,] GetPoints()
         {
             return PArray;
+        }
+
+        // Return the x,y coordiante of the point at t
+        public float[] EvaluateAt(float t)
+        {
+            // Validate t
+            if (t >= 0.0f && t <= 1.0f)
+            {
+
+            }
+            else
+            {
+                Console.WriteLine("Invalid t");
+            }
         }
 
         public override bool Equals(object obj)
@@ -53,6 +72,10 @@ namespace src
             return this.PArray.GetHashCode();
         }
 
+        // Helper Function to process some fixed variables for the Bezier Curve
+        private void PrepareVariables()
+        {
 
+        }
     }
 }

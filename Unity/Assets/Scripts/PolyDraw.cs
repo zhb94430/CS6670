@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PolyDraw : MonoBehaviour 
 {
+    public float[,] points;
+    
     public float lineWidth = 0.1f;
     public Color lineColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-    public float[,] points;
+    
 
     LineRenderer lineRenderer;
     Vector3[] positions;
@@ -39,6 +41,6 @@ public class PolyDraw : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        lineRenderer.SetPositions(positions);
+        // lineRenderer.SetPositions(positions);
 	}
 }
