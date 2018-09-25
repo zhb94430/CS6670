@@ -6,7 +6,7 @@ public class PolyDraw : MonoBehaviour
 {
     public float[,] points;
     
-    public float lineWidth = 0.1f;
+    public float lineWidth = 0.025f;
     public Color lineColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     
 
@@ -18,15 +18,17 @@ public class PolyDraw : MonoBehaviour
 	void Awake () 
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-        lineRenderer.startWidth = lineWidth;
-        lineRenderer.endWidth = lineWidth;
-        lineRenderer.startColor = lineColor;
-        lineRenderer.endColor = lineColor;
+        lineRenderer.material = new Material(Shader.Find("GUI/Text Shader"));
+
     }
 
     void Start()
     {
+        lineRenderer.startWidth = lineWidth;
+        lineRenderer.endWidth = lineWidth;
+        lineRenderer.startColor = lineColor;
+        lineRenderer.endColor = lineColor;
+
         positions = new Vector3[points.GetLength(0)];
 
         for (int i = 0; i < points.GetLength(0); i++)

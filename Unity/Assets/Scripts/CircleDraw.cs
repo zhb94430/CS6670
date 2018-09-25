@@ -20,11 +20,15 @@ public class CircleDraw : MonoBehaviour
         size++;
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("GUI/Text Shader"));
+        lineRenderer.positionCount = size;
+    }
+
+    void Start()
+    {
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
         lineRenderer.startColor = color;
         lineRenderer.endColor = color;
-        lineRenderer.positionCount = size;
     }
 
     void Update()

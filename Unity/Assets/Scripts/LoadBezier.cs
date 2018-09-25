@@ -25,6 +25,7 @@ public class LoadBezier : MonoBehaviour {
             BezierDraw bScript = g.AddComponent<BezierDraw>();
 
             bScript.b = b;
+            bScript.steps = 100;
         }
     }
 

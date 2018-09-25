@@ -18,6 +18,7 @@ public class BezierDraw : MonoBehaviour {
         GameObject polyLine = new GameObject();
         PolyDraw p = polyLine.AddComponent<PolyDraw>();
         p.points = points;
+        p.lineColor = new Color(0.0f, 0.0f, 1.0f);
 
         // Draw Points
         for (int i = 0; i < b.numOfPoints; i++)
@@ -42,7 +43,8 @@ public class BezierDraw : MonoBehaviour {
             //Construct one line
             GameObject gameObject = new GameObject();
             PolyDraw currentLine = gameObject.AddComponent<PolyDraw>();
-            currentLine.points = new float[,] {previousPoint, currentPoint};
+            currentLine.points = new float[,] { { previousPoint[0], previousPoint[1] },
+                                                { currentPoint[0] , currentPoint[1] } };
 
             previousPoint = currentPoint;
         }
