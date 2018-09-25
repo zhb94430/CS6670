@@ -10,13 +10,19 @@ public class BezierDraw : MonoBehaviour {
 
     float[,] points;
 
+    GameObject controlPoly, controlPts, curve;
+    bool controlPolyToggle, controlPtsToggle, curveToggle = true;
+
 	// Use this for initialization
 	void Start () {
         points = b.GetPoints();
+        controlPoly = new GameObject();
+        controlPts = new GameObject();
+        curve = new GameObject();
+
 
         // Draw Polygon
-        GameObject polyLine = new GameObject();
-        PolyDraw p = polyLine.AddComponent<PolyDraw>();
+        PolyDraw p = controlPoly.AddComponent<PolyDraw>();
         p.points = points;
         p.lineColor = new Color(0.0f, 0.0f, 1.0f);
 
@@ -28,6 +34,7 @@ public class BezierDraw : MonoBehaviour {
 
             // Draw Circles on screen
             GameObject circle = new GameObject();
+            circle.transform.SetParent(controlPts.transform);
             circle.AddComponent<CircleDraw>();
             circle.transform.position = currentPoint;
         }
@@ -41,8 +48,9 @@ public class BezierDraw : MonoBehaviour {
             float[] currentPoint = b.EvaluateAt(currentT); 
 
             //Construct one line
-            GameObject gameObject = new GameObject();
-            PolyDraw currentLine = gameObject.AddComponent<PolyDraw>();
+            GameObject lineSeg = new GameObject();
+            lineSeg.transform.SetParent(curve.transform);
+            PolyDraw currentLine = lineSeg.AddComponent<PolyDraw>();
             currentLine.points = new float[,] { { previousPoint[0], previousPoint[1] },
                                                 { currentPoint[0] , currentPoint[1] } };
 

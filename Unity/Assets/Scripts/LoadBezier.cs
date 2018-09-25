@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using src;
 
 public class LoadBezier : MonoBehaviour {
@@ -18,6 +19,16 @@ public class LoadBezier : MonoBehaviour {
 
     void Start()
     {
+
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+	}
+
+    public void LoadCurveList ()
+    {
         foreach (Bezier b in dparser.GetResult().GetBezierList())
         {
             GameObject g = new GameObject();
@@ -28,9 +39,4 @@ public class LoadBezier : MonoBehaviour {
             bScript.steps = 100;
         }
     }
-
-    // Update is called once per frame
-    void Update () {
-
-	}
 }
