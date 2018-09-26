@@ -5,11 +5,38 @@ using UnityEngine.UI;
 
 using src;
 
-public class BezierDraw : MonoBehaviour {
+public class BezierDraw : MonoBehaviour
+{
     public Bezier b;
     public int steps = 100;
     public Toggle tPoly, tPts, tCrv;
-    public bool isSelected = false;
+
+    private bool _isSelected = false;
+    public bool isSelected
+    {
+        get
+        {
+            return _isSelected;
+        }
+
+        set 
+        {
+            _isSelected = value;
+
+            if (_isSelected == false)
+            {
+                controlPoly.SetActive(false);
+                controlPts.SetActive(false);
+            }
+            else
+            {
+
+                controlPoly.SetActive(true);
+                controlPts.SetActive(true);
+            }
+        }
+    }
+
 
     private List<Bezier.BPoint> points;
 
@@ -21,13 +48,25 @@ public class BezierDraw : MonoBehaviour {
         tPts = _tPts;
         tCrv = _tCrv;
 
-        tPoly.onValueChanged.AddListener(delegate {controlPoly.SetActive(!controlPoly.activeSelf);});
-        tPts.onValueChanged.AddListener(delegate  {controlPts.SetActive(!controlPts.activeSelf);});
+        tPoly.onValueChanged.AddListener(delegate { SetActiveConsiderSelected(controlPoly); });
+        tPts.onValueChanged.AddListener(delegate  {SetActiveConsiderSelected(controlPts);});
         tCrv.onValueChanged.AddListener(delegate  {curve.SetActive(!curve.activeSelf);});
     }
 
+    // Used to toggle controlPoly, controlPts, and Curve with isSelected under consideration
+    void SetActiveConsiderSelected (GameObject g)
+    {
+        if (isSelected)
+        {
+            g.SetActive(!g.activeSelf);
+        }
+    }
+
+
+
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
         points = b.GetPoints();
         controlPoly = new GameObject();
         controlPts = new GameObject();
@@ -71,13 +110,14 @@ public class BezierDraw : MonoBehaviour {
 
             previousPoint = currentPoint;
         }
+
+        controlPoly.SetActive(false);
+        controlPts.SetActive(false);
     }
 	
 	// Update is called once per frame
-	void Update () {
-        if (isSelected)
-        {
+	void Update () 
+    {
 
-        }
 	}
 }

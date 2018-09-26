@@ -14,6 +14,32 @@ public class BezierController : MonoBehaviour {
     public DatParser dparser;
     //public CrvParser cparser;
 
+    BezierDraw[] bezierDrawList;
+    private int _activeIndex = 0;
+    public int activeIndex
+    {
+        get
+        {
+            return _activeIndex;
+        }
+        set
+        {
+            if (value >= bezierDrawList.Length)
+            {
+                _activeIndex = bezierDrawList.Length - 1;
+            }
+            else if (value < 0)
+            {
+                _activeIndex = 0;
+            }
+            else 
+            {
+                _activeIndex = value;
+            }
+        }
+    }
+
+    // Interaction Varaibles
     Vector3 prevMousePos;
     Vector3 startPos;
     bool moving = false;
@@ -65,6 +91,9 @@ public class BezierController : MonoBehaviour {
             if (h.collider != null)
             {
                 h.collider.gameObject.GetComponent<CircleDraw>().ChangeColorToDefault();
+
+                //movingObject.transform.position
+
                 movingObject = null;
                 moving = false;
 
@@ -77,21 +106,44 @@ public class BezierController : MonoBehaviour {
 
     public void LoadCurveList ()
     {
-        foreach (Bezier b in dparser.GetResult().GetBezierList())
+        List<Bezier> bezierList = dparser.GetResult().GetBezierList();
+        bezierDrawList = new BezierDraw[bezierList.Count];
+
+        for (int i = 0; i < bezierList.Count; i++)
         {
+            Bezier b = bezierList[i];
+
             GameObject g = new GameObject();
+            g.name = "BezierCurve" + i;
 
             BezierDraw bScript = g.AddComponent<BezierDraw>();
             bScript.SetToggles(tPoly, tPts, tCrv);
 
             bScript.b = b;
             bScript.steps = 100;
+
+            bezierDrawList[i] = bScript;
         }
     }
 
     public void DisplayCrv()
     {
 
+    }
+
+    // Button Functions
+    public void NextCurve()
+    {
+        bezierDrawList[activeIndex].isSelected = false;
+        activeIndex = activeIndex + 1;
+        bezierDrawList[activeIndex].isSelected = true;
+    }
+
+    public void PrevCurve()
+    {
+        bezierDrawList[activeIndex].isSelected = false;
+        activeIndex = activeIndex - 1;
+        bezierDrawList[activeIndex].isSelected = true;
     }
 
     public void OpenNewFile ()
