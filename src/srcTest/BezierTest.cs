@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 using src;
@@ -10,9 +11,9 @@ namespace srcTest
         [Fact]
         public void ConstructorTest()
         {
-            float[,] input = new float[3, 2] { { 1.0F, 1.0F},
-                                               { 0.707F, 0.707F},
-                                               { 1.0F, 0.0F} };
+            List<Bezier.BPoint> input = new List<Bezier.BPoint> { new Bezier.BPoint( 1.0F, 1.0F),
+                                               new Bezier.BPoint( 0.707F, 0.707F),
+                                               new Bezier.BPoint( 1.0F, 0.0F) };
 
             Bezier b = new Bezier(input);
 
@@ -22,14 +23,14 @@ namespace srcTest
         [Fact]
         public void EvaluateAtTestSimple()
         {
-            float[,] input = new float[3, 2] { { 1.0F, 1.0F},
-                                               { 0.707F, 0.707F},
-                                               { 1.0F, 0.0F} };
+            List<Bezier.BPoint> input = new List<Bezier.BPoint> { new Bezier.BPoint( 1.0F, 1.0F),
+                                               new Bezier.BPoint( 0.707F, 0.707F),
+                                               new Bezier.BPoint( 1.0F, 0.0F) };
 
             Bezier b = new Bezier(input);
 
-            float[] result = b.EvaluateAt(0.5F);
-            float[] expected = new float[2] { 0.8535F, 0.6035F };
+            Bezier.BPoint? result = b.EvaluateAt(0.5F);
+            Bezier.BPoint? expected = new Bezier.BPoint ( 0.8535F, 0.6035F );
 
             Assert.Equal(expected, result);
         }

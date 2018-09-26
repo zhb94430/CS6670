@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace src
 {
@@ -11,37 +11,112 @@ namespace src
         public int order;
         public int pointDim;
 
+        public struct BPoint
+        {
+            public float x;
+            public float y;
+
+            public BPoint (float _x, float _y)
+            {
+                x = _x;
+                y = _y;
+            }
+
+            public override int GetHashCode()
+            {
+                return x.GetHashCode() ^ y.GetHashCode();
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is BPoint && this == (BPoint)obj;
+            }
+
+            public static bool operator ==(BPoint x, BPoint y)
+            {
+                return x.x == y.x && x.y == y.y;
+            }
+            public static bool operator !=(BPoint x, BPoint y)
+            {
+                return !(x == y);
+            }
+            public static BPoint operator -(BPoint x, BPoint y)
+            {
+                return new BPoint(x.x - y.x, x.y - y.y);
+            }
+        }
+
         // Data Structures
-        private float[,] PArray;
+        private List<BPoint> PArray;
 
         // Preprocessed Variables
 
 
         // Methods
-        public Bezier(float[,] _PArray)
+        public Bezier(List<BPoint> _PArray)
         {
             PArray = _PArray;
-            numOfPoints = PArray.GetLength(0);
+            numOfPoints = PArray.Count;
             order = numOfPoints - 1;
-            pointDim = PArray.GetLength(1);
+            pointDim = 2;
 
             PrepareVariables();
         }
 
-        public float[,] GetPoints()
+        public List<BPoint> GetPoints()
         {
             return PArray;
         }
 
+        public void ReplacePointWith(BPoint oldP, BPoint newP)
+        {
+            int i = PArray.IndexOf(oldP);
+
+            if (i != -1)
+            {
+                PArray[i] = newP;
+            }
+            else
+            {
+                Console.WriteLine("Cannot find old point in ReplacePointWith");
+            }
+        }
+
+        public void InsertPoint(BPoint p)
+        {
+            int i = PArray.IndexOf(p);
+
+            if (i != -1)
+            {
+                if (i+1 == PArray.Count)
+                {
+                    PArray.Add(new BPoint(p.x + 1, p.y + 1));
+                }
+                else
+                {
+                    PArray.Insert(i + 1, PArray[i + 1] - PArray[i]);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Cannot find point in InsertPoint");
+            }
+        }
+
+        public void DeletePoint(BPoint p)
+        {
+            PArray.Remove(p);
+        }
+
         // Return the x,y coordiante of the point at t
-        public float[] EvaluateAt(float t)
+        public BPoint? EvaluateAt(float t)
         {
             // Validate t
             if (t >= 0.0f && t <= 1.0f)
             {
-                float[] result = new float[2] {0.0F, 0.0F};
+                BPoint result = new BPoint(0.0F, 0.0F);
 
-                float[,] highestOrderResult = PArray;
+                List<BPoint> highestOrderResult = PArray;
 
                 //for (int i = 0; i < numOfPoints; i++)
                 //{
@@ -58,10 +133,10 @@ namespace src
                     highestOrderResult = NextLevel(highestOrderResult, t);
                 }
 
-                if (highestOrderResult.GetLength(0) == 1)
+                if (highestOrderResult.Count == 1)
                 {
-                    result[0] = highestOrderResult[0, 0];
-                    result[1] = highestOrderResult[0, 1];
+                    result.x = highestOrderResult[0].x;
+                    result.y = highestOrderResult[0].y;
                 }
 
                 return result;
@@ -84,9 +159,7 @@ namespace src
 
             // https://stackoverflow.com/questions/12446770/how-to-compare-multidimensional-arrays-in-c-sharp
 
-            var result = this.PArray.Rank == item.PArray.Rank 
-                      && Enumerable.Range(0, this.PArray.Rank).All(dimension => this.PArray.GetLength(dimension) == item.PArray.GetLength(dimension)) 
-                      && this.PArray.Cast<float>().SequenceEqual(item.PArray.Cast<float>());
+            var result = this.PArray.SequenceEqual(item.PArray);
 
             return result;
         }
@@ -132,23 +205,20 @@ namespace src
         }
 
         // Helper Function to generate higher level point array
-        private float[,] NextLevel(float[,] currentLevel, float t)
+        private List<BPoint> NextLevel(List<BPoint> currentLevel, float t)
         {
-            int currentNumOfPoints = currentLevel.GetLength(0);
+            int currentNumOfPoints = currentLevel.Count;
 
-            float[,] result = new float[currentNumOfPoints-1, pointDim];
+            List<BPoint> result = new List<BPoint>(new BPoint[currentNumOfPoints-1]);
 
             for (int i = 0; (i + 1) < currentNumOfPoints; i++)
             {
-                float currentPointX = currentLevel[i, 0];
-                float currentPointY = currentLevel[i, 1];
-
-                float nextPointX = currentLevel[i+1, 0];
-                float nextPointY = currentLevel[i+1, 1];
+                BPoint currentPoint = currentLevel[i];
+                BPoint nextPoint = currentLevel[i + 1];
 
                 // Interpolate
-                result[i, 0] = (1.0f - t) * currentPointX + t * nextPointX;
-                result[i, 1] = (1.0f - t) * currentPointY + t * nextPointY;
+                result[i] = new BPoint((1.0f - t) * currentPoint.x + t * nextPoint.x, 
+                                       (1.0f - t) * currentPoint.y + t * nextPoint.y);
             }
 
 

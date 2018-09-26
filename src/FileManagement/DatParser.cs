@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace src
 {
     public class DatParser
     {
         // Arrays to store the points
-        private float[,] PArray;
+        private List<Bezier.BPoint> PArray;
 
         // Curves Class stores a list of parsed curves
         private Curves curves;
@@ -70,7 +71,7 @@ namespace src
                     {
                         arrayLength = int.Parse(parsed[1]);
 
-                        PArray = new float[arrayLength, 2];
+                        PArray = new List<Bezier.BPoint>(new Bezier.BPoint[arrayLength]);
                         currentIndex = 0;
                     }
 
@@ -95,8 +96,7 @@ namespace src
                                 y = float.Parse(parsed[1]) / w;
                             }
 
-                            PArray[currentIndex, 0] = x;
-                            PArray[currentIndex, 1] = y;
+                            PArray[currentIndex] = new Bezier.BPoint(x, y);
                             currentIndex++;
                         }
 
@@ -106,8 +106,7 @@ namespace src
                             float x = float.Parse(parsed[0]);
                             float y = float.Parse(parsed[1]);
 
-                            PArray[currentIndex, 0] = x;
-                            PArray[currentIndex, 1] = y;
+                            PArray[currentIndex] = new Bezier.BPoint(x, y);
                             currentIndex++;
                         }
                     }
@@ -122,7 +121,7 @@ namespace src
 
                         currentIndex = 0;
                         arrayLength = 0;
-                        PArray = new float[0, 0];
+                        PArray = new List<Bezier.BPoint>();
                     }
                 }
             }

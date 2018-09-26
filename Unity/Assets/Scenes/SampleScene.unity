@@ -847,7 +847,7 @@ GameObject:
   - component: {fileID: 534669903}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1118,17 +1118,54 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 892753072}
   m_CullTransparentMesh: 0
---- !u!114 &1165296403 stripped
+--- !u!1 &1165296402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1981235580325912, guid: 334a1fc9e97074da48922fbe903dd913,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1165296404}
+  - component: {fileID: 1165296403}
+  m_Layer: 0
+  m_Name: CurveLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1165296403
 MonoBehaviour:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 114980696266245380, guid: 334a1fc9e97074da48922fbe903dd913,
     type: 2}
-  m_PrefabInternal: {fileID: 1707096036}
-  m_Script: {fileID: 11500000, guid: 19754772a5b7646a3bd267019c13e026, type: 3}
---- !u!4 &1165296404 stripped
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1165296402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e6987d39fe6452ebe24c8d6da76dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: /Users/Peter/GitRepos/CS6670/Data/UnitTestData/treble.dat
+  canvas: {fileID: 121006625}
+  tPoly: {fileID: 1703389743}
+  tPts: {fileID: 289274880}
+  tCrv: {fileID: 1459593658}
+--- !u!4 &1165296404
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913,
     type: 2}
-  m_PrefabInternal: {fileID: 1707096036}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1165296402}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 438.69965, y: -314.21872, z: 20.276897}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1216514013}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1216514012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,7 +1425,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1165296403}
-        m_MethodName: LoadCurveList
+        m_MethodName: OpenNewFile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1864,58 +1901,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1
---- !u!1001 &1707096036
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1216514013}
-    m_Modifications:
-    - target: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 438.69965
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -314.21872
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 20.276897
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899166371343662, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114980696266245380, guid: 334a1fc9e97074da48922fbe903dd913,
-        type: 2}
-      propertyPath: loadButton
-      value: 
-      objectReference: {fileID: 1337642230}
-    - target: {fileID: 114980696266245380, guid: 334a1fc9e97074da48922fbe903dd913,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 334a1fc9e97074da48922fbe903dd913, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &1827731491
 GameObject:
   m_ObjectHideFlags: 0

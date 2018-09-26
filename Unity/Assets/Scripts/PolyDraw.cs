@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using src;
+
 public class PolyDraw : MonoBehaviour 
 {
-    public float[,] points;
+    public List<Bezier.BPoint> points;
     
     public float lineWidth = 0.025f;
     public Color lineColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -29,11 +31,11 @@ public class PolyDraw : MonoBehaviour
         lineRenderer.startColor = lineColor;
         lineRenderer.endColor = lineColor;
 
-        positions = new Vector3[points.GetLength(0)];
+        positions = new Vector3[points.Count];
 
-        for (int i = 0; i < points.GetLength(0); i++)
+        for (int i = 0; i < points.Count; i++)
         {
-            positions[i] = new Vector3(points[i, 0], points[i, 1], 1.0f);
+            positions[i] = new Vector3(points[i].x, points[i].y, 1.0f);
         }
 
         lineRenderer.positionCount = positions.Length;

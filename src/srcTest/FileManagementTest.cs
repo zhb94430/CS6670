@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 using src;
@@ -22,9 +23,9 @@ namespace srcTest
         {
             DatParser dat = new DatParser("../../UnitTestData/Simple.dat");
 
-            Bezier b = new Bezier(new float[3,2] { { 1.0F, 1.0F}, 
-                                                   { 0.707F, 0.707F},
-                                                   { 1.0F, 0.0F} });
+            Bezier b = new Bezier(new List<Bezier.BPoint> { new Bezier.BPoint(1.0F, 1.0F),
+                                                            new Bezier.BPoint(0.707F, 0.707F),
+                                                            new Bezier.BPoint(1.0F, 0.0F) });
 
             Curves correctResult = new Curves();
             correctResult.AddBezier(b);
@@ -37,9 +38,9 @@ namespace srcTest
         {
             DatParser dat = new DatParser("../../UnitTestData/SimpleRational.dat");
 
-            Bezier b = new Bezier(new float[3, 2] { { float.PositiveInfinity, float.PositiveInfinity }, 
-                                                    { 1.0F, 1.0F }, 
-                                                    { 1.0F, 0.0F } });
+            Bezier b = new Bezier(new List<Bezier.BPoint> { new Bezier.BPoint( 1.0F, 1.0F ), 
+                                                    new Bezier.BPoint( 0.707F, 0.707F ), 
+                                                    new Bezier.BPoint( 1.0F, 0.0F ) });
 
             Curves correctResult = new Curves();
             correctResult.AddBezier(b);
@@ -52,32 +53,32 @@ namespace srcTest
         {
             DatParser dat = new DatParser("../../UnitTestData/apple.dat");
 
-            Bezier b1 = new Bezier(new float[15, 2] { { 3.14286F, 3.68571F }, 
-                                                      { -0.6F, 9.4F }, 
-                                                      { -2.2F, 0.571427F },
-                                                      { -4.68572F, 0.314284F },
-                                                      { -2.25714F, 10.1714F },
-                                                      { -5.8F, 9.2F },
-                                                      { -10.3714F, 7.37143F },
-                                                      { -17.8F, -1.25714F },
-                                                      { -8.54286F, -6.6F },
-                                                      { 2.97143F, -12.2571F },
-                                                      { -3.82857F, -5.94286F },
-                                                      { -5.37143F, -1.28572F },
-                                                      { 0.885713F, -1.74286F },
-                                                      { -1.22857F, -11.3143F },
-                                                      { 3.62857F, -1.65715F }});
+            Bezier b1 = new Bezier(new List<Bezier.BPoint> { new Bezier.BPoint( 3.14286F, 3.68571F ), 
+                                                      new Bezier.BPoint( -0.6F, 9.4F ), 
+                                                      new Bezier.BPoint( -2.2F, 0.571427F ),
+                                                      new Bezier.BPoint( -4.68572F, 0.314284F ),
+                                                      new Bezier.BPoint( -2.25714F, 10.1714F ),
+                                                      new Bezier.BPoint( -5.8F, 9.2F ),
+                                                      new Bezier.BPoint( -10.3714F, 7.37143F ),
+                                                      new Bezier.BPoint( -17.8F, -1.25714F ),
+                                                      new Bezier.BPoint( -8.54286F, -6.6F ),
+                                                      new Bezier.BPoint( 2.97143F, -12.2571F ),
+                                                      new Bezier.BPoint( -3.82857F, -5.94286F ),
+                                                      new Bezier.BPoint( -5.37143F, -1.28572F ),
+                                                      new Bezier.BPoint( 0.885713F, -1.74286F ),
+                                                      new Bezier.BPoint( -1.22857F, -11.3143F ),
+                                                      new Bezier.BPoint( 3.62857F, -1.65715F )});
 
-            Bezier b2 = new Bezier(new float[3, 2] { { 3.14286F, 3.68571F},
-                                                     { -0.0857147F, 0.771426F},
-                                                     { 3.62857F, -1.65715F} });
+            Bezier b2 = new Bezier(new List<Bezier.BPoint> { new Bezier.BPoint( 3.14286F, 3.68571F),
+                                                     new Bezier.BPoint( -0.0857147F, 0.771426F),
+                                                     new Bezier.BPoint( 3.62857F, -1.65715F) });
 
-            Bezier b3 = new Bezier(new float[6, 2] { { -2.17143F, 5.11429F},
-                                                     { -2.0F, 7.62857F},
-                                                     { -0.514285F, 6.94286F},
-                                                     { 1.57143F, 10.4571F},
-                                                     { 0.457144F, 5.54286F},
-                                                     { -2.17143F, 5.05714F}});
+            Bezier b3 = new Bezier(new List<Bezier.BPoint> { new Bezier.BPoint( -2.17143F, 5.11429F),
+                                                     new Bezier.BPoint( -2.0F, 7.62857F),
+                                                     new Bezier.BPoint( -0.514285F, 6.94286F),
+                                                     new Bezier.BPoint( 1.57143F, 10.4571F),
+                                                     new Bezier.BPoint( 0.457144F, 5.54286F),
+                                                     new Bezier.BPoint( -2.17143F, 5.05714F)});
 
             Curves correctResult = new Curves();
             correctResult.AddBezier(b1);
