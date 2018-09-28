@@ -135,12 +135,37 @@ namespace src
                 }
             }
 
+            r.Close();
+
             return curves;
         }
 
-        //public string UnParse(Curves c)
-        //{
+        public void UnParse(Curves c, string location)
+        {
+            List<Bezier> bezierList = c.GetBezierList();
 
-        //}
+            StreamWriter w = new StreamWriter(location);
+
+            // Number of Curves
+            w.WriteLine(bezierList.Count);
+
+            for (int i = 0; i < bezierList.Count; i++)
+            {
+                List<Bezier.BPoint> currentPts = bezierList[i].GetPoints();
+
+                // Number of Points
+                w.WriteLine("P " + currentPts.Count);
+
+                // Points
+                for (int j = 0; j < currentPts.Count; j++)
+                {
+                    Bezier.BPoint currentPoint = currentPts[j];
+
+                    w.WriteLine(currentPoint.x + " " + currentPoint.y);
+                }
+            }
+
+            w.Close();
+        }
     }
 }

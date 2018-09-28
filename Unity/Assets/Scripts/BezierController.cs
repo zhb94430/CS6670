@@ -290,17 +290,33 @@ public class BezierController : MonoBehaviour {
         }
     }
 
+    public void OpenCRVFile()
+    {
+        string[] result = StandaloneFileBrowser.OpenFilePanel("Choose .crv file", "../", "crv", false);
+
+        if (result.Length == 1)
+        {
+            DatParser cparser = new DatParser(result[0].Substring(7));
+
+            Curves crv = cparser.Parse();
+
+            GameObject g = new GameObject();
+
+            PolyDraw p = g.AddComponent<PolyDraw>();
+
+            p.points = crv.GetBezierList()[0].GetPoints();
+            p.lineColor = new Color(0.0f, 0.0f, 0.0f);
+        }
+    }
+
     public void SaveFile()
     {
         curves.SetBezierList(bezierList);
 
-        //string stringToWrite = dparser.Unparse(curves);
+
 
         string result = StandaloneFileBrowser.SaveFilePanel("Choose Save Location", "../", "Curve", "dat");
-    }
 
-    public void OpenCRVFile()
-    {
-
+        dparser.UnParse(curves, result);
     }
 }
