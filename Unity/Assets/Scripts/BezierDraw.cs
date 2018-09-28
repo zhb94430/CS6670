@@ -62,15 +62,28 @@ public class BezierDraw : MonoBehaviour
         }
     }
 
-
-
-	// Use this for initialization
-	void Start () 
+    void Awake()
     {
-        points = b.GetPoints();
         controlPoly = new GameObject();
         controlPts = new GameObject();
         curve = new GameObject();
+
+        controlPoly.name = "Control Polygon";
+        controlPts.name = "Control Points";
+        curve.name = "Actual Curve";
+
+        controlPoly.transform.parent = gameObject.transform;
+        controlPts.transform.parent = gameObject.transform;
+        curve.transform.parent = gameObject.transform;
+
+        controlPoly.SetActive(false);
+        controlPts.SetActive(false);
+    }
+
+    // Use this for initialization
+    void Start () 
+    {
+        points = b.GetPoints();
 
         // Draw Polygon
         PolyDraw p = controlPoly.AddComponent<PolyDraw>();
@@ -110,9 +123,6 @@ public class BezierDraw : MonoBehaviour
 
             previousPoint = currentPoint;
         }
-
-        controlPoly.SetActive(false);
-        controlPts.SetActive(false);
     }
 	
 	// Update is called once per frame

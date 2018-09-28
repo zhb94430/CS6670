@@ -18,9 +18,24 @@ namespace src
             bezierList.Add(b);
         }
 
+        public void DeleteBezier(Bezier b)
+        {
+            bezierList.Remove(b);
+        }
+
         public List<Bezier> GetBezierList()
         {
             return bezierList;
+        }
+
+        public void SetBezierList(List<Bezier> beziers)
+        {
+            bezierList = beziers;
+        }
+
+        public void Append(Curves c)
+        {
+            bezierList.AddRange(c.bezierList);
         }
 
         public override bool Equals(object obj)

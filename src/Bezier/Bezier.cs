@@ -7,9 +7,43 @@ namespace src
     public class Bezier
     {
         // Attributes
-        public int numOfPoints;
-        public int order;
-        public int pointDim;
+        private int _numOfPoints;
+        public int numOfPoints
+        {
+            get 
+            {
+                if (PArray != null)
+                {
+                    _numOfPoints = PArray.Count;
+                    return PArray.Count;
+                }
+                else
+                {
+                    return _numOfPoints;
+                }
+            }
+
+            set
+            {
+                _numOfPoints = value;
+            }
+        }
+
+        private int _order;
+        public int order
+        {
+            get 
+            {
+                return numOfPoints-1;
+            }
+
+            set
+            {
+                _order = value;
+            }
+        }
+
+        static public int pointDim = 2;
 
         public struct BPoint
         {
@@ -94,7 +128,11 @@ namespace src
                 }
                 else
                 {
-                    PArray.Insert(i + 1, PArray[i + 1] - PArray[i]);
+                    BPoint difference = PArray[i + 1] - PArray[i];
+
+                    BPoint newPoint = new BPoint(PArray[i].x + difference.x / 2, PArray[i].y + difference.y / 2);
+
+                    PArray.Insert(i+1, newPoint);
                 }
             }
             else

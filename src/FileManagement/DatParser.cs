@@ -11,26 +11,35 @@ namespace src
 
         // Curves Class stores a list of parsed curves
         private Curves curves;
+        private string fileLocation;
 
-        public DatParser(string fileLocation)
+        public DatParser(string _fileLocation)
         {
             curves = new Curves();
 
-            if (File.Exists(fileLocation))
+            if (File.Exists(_fileLocation))
             {
-                this.Parse(File.OpenText(fileLocation));
+                fileLocation = _fileLocation;
             }
             else
             {
+                fileLocation = null;
                 Console.WriteLine("Invalid Path");
             }
         }
 
-        private void Parse(StreamReader r)
+        public DatParser(Curves _curves)
+        {
+            curves = _curves;
+        }
+
+        public Curves Parse()
         {
             int numberOfLines = -1;
             int arrayLength = 0;
             int currentIndex = 0;
+
+            StreamReader r = File.OpenText(fileLocation);
 
             while(r.Peek() >= 0 && numberOfLines != 0)
             {
@@ -125,11 +134,13 @@ namespace src
                     }
                 }
             }
-        }
 
-        public Curves GetResult()
-        {
             return curves;
         }
+
+        //public string UnParse(Curves c)
+        //{
+
+        //}
     }
 }

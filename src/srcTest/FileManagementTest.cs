@@ -30,7 +30,7 @@ namespace srcTest
             Curves correctResult = new Curves();
             correctResult.AddBezier(b);
 
-            Assert.StrictEqual<Curves>(correctResult, dat.GetResult());
+            Assert.StrictEqual<Curves>(correctResult, dat.Parse());
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace srcTest
             Curves correctResult = new Curves();
             correctResult.AddBezier(b);
 
-            Assert.StrictEqual<Curves>(correctResult, dat.GetResult());
+            Assert.StrictEqual<Curves>(correctResult, dat.Parse());
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace srcTest
             correctResult.AddBezier(b2);
             correctResult.AddBezier(b3);
 
-            Assert.StrictEqual<Curves>(correctResult, dat.GetResult());
+            Assert.StrictEqual<Curves>(correctResult, dat.Parse());
         }
 
     }
